@@ -1,0 +1,7 @@
+{
+  "mongoURI": "mongodb+srv://Venkat407:venkitheviper_3@cluster0-ca7in.mongodb.net/test?retryWrites=true&w=majority",
+  "googleClientID": "622760453217-alhit7bekad535sdmnl3ttdrraf3jghm.apps.googleusercontent.com",
+  "googleClientSecret": "hXFdaJqUIv8BtMp8y2hTsShl",
+  "cookieKey": "sjfjsanfjafuefuecnmsanfsafnjahfawfuanfasjfnjsanfakjsnfieafiefnnsfnms",
+  "jwtSecret": "i am the king"
+}
