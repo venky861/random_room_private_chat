@@ -1,6 +1,8 @@
 import React, { useState } from "react"
+import { connect } from "react-redux"
+import { login } from "../actions/auth"
 
-const Login = () => {
+const Login = ({ login }) => {
   const [formData, setFormData] = useState({
     email: "",
     password1: "",
@@ -38,6 +40,7 @@ const Login = () => {
       }, 3000)
     } else {
       console.log(errors)
+      login({ email, password: password1 })
       setFormData({ email: "", password1: "" })
     }
   }
@@ -94,4 +97,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default connect(null, { login })(Login)

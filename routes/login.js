@@ -14,7 +14,9 @@ router.post("/", async (req, res) => {
     const usermail = await User.findOne({ email })
 
     if (!usermail) {
-      return res.status(400).json({ errors: "E-mail does not exist" })
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "E-mail does not exist" }] })
     }
 
     //password de-crypt
@@ -22,7 +24,9 @@ router.post("/", async (req, res) => {
     const isMatch = await bcrypt.compare(password, usermail.password)
 
     if (!isMatch) {
-      return res.status(400).json({ errors: [{ msg: "Invalid credentials" }] })
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Password does not match" }] })
     }
 
     const payload = {
@@ -38,7 +42,7 @@ router.post("/", async (req, res) => {
     })
   } catch (err) {
     console.log(err)
-    res.status(500).send("Server error")
+    res.status(500).send("Error in logging In")
   }
 })
 

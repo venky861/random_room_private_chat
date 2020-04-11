@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar"
 import Landing from "./components/Landing"
 import Register from "./components/Register"
 import Login from "./components/Login"
+import Alert from "./components/Alert"
 
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom"
 
@@ -11,6 +12,7 @@ const App = () => {
   return (
     <Router>
       <Navbar />
+      <Alert className='container'></Alert>
       <Route exact path='/' component={Landing}></Route>
       <Switch>
         <Route exact path='/messages' component={Sendmessages}></Route>

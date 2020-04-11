@@ -13,7 +13,9 @@ router.post("/", async (req, res) => {
     const usermail = await User.findOne({ email })
 
     if (usermail) {
-      return res.status(400).json({ errors: "E-mail id already exist" })
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Email ID already exist" }] })
     }
 
     // create user
@@ -41,12 +43,8 @@ router.post("/", async (req, res) => {
     })
   } catch (err) {
     console.log(err)
-    res.status(500).send("error in register route")
+    res.status(500).send("Error in registering")
   }
 })
 
-router.get("/", async (req, res) => {
-  const data = await Survey.find()
-  res.send("this is register")
-})
 module.exports = router

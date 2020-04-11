@@ -1,8 +1,15 @@
-import { SEND_SMS, AUTH_ERROR, GOOGLE_LOGIN } from "../actions/types"
+import {
+  SEND_SMS,
+  AUTH_ERROR,
+  GOOGLE_LOGIN,
+  REGISTER,
+  LOGIN,
+} from "../actions/types"
 
 const initialState = {
-  loading: false,
-  text: null,
+  isAuthenticated: null,
+  loading: true,
+  user: null,
 }
 
 export default function (state = initialState, action) {
@@ -12,15 +19,16 @@ export default function (state = initialState, action) {
     case SEND_SMS:
       return {
         ...state,
-        loading: true,
-        text: payload,
+        loading: false,
+        user: payload,
       }
-
+    case REGISTER:
     case GOOGLE_LOGIN:
-      return { ...state }
+    case LOGIN:
+      return { ...state, ...payload, isAuthenticated: true, loading: false }
 
     case AUTH_ERROR:
-      return { ...state }
+      return { ...state, isAuthenticated: false, loading: false }
     default:
       return state
   }

@@ -1,6 +1,8 @@
 import React, { useState } from "react"
+import { connect } from "react-redux"
+import { register } from "../actions/auth"
 
-const Register = () => {
+const Register = ({ register }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,6 +54,7 @@ const Register = () => {
       }, 3000)
     } else {
       console.log(errors)
+      register({ name, email, password: password1 })
       setFormData({ name: "", email: "", password1: "", password2: "" })
     }
   }
@@ -131,4 +134,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default connect(null, { register })(Register)
