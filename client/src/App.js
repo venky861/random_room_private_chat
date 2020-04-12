@@ -5,8 +5,13 @@ import Landing from "./components/Landing"
 import Register from "./components/Register"
 import Login from "./components/Login"
 import Alert from "./components/Alert"
+import setAuthToken from "./utils/setAuthToken"
 
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom"
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token)
+}
 
 const App = () => {
   return (
@@ -18,7 +23,6 @@ const App = () => {
         <Route exact path='/messages' component={Sendmessages}></Route>
         <Route exact path='/register' component={Register}></Route>
         <Route exact path='/Login' component={Login}></Route>
-        <Route exact path='/dashboard' component={Sendmessages}></Route>
       </Switch>
     </Router>
   )

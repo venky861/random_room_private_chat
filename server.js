@@ -5,6 +5,7 @@ const passport = require("passport")
 const path = require("path")
 
 const cookieSession = require("cookie-session")
+const cookieParser = require("cookie-parser")
 
 require("./models/user")
 require("./models/googleid")
@@ -12,7 +13,7 @@ require("./models/googleid")
 const connectDB = require("./config/db")
 require("./services/passport")
 connectDB()
-
+app.use(cookieParser())
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,

@@ -1,8 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
 import { sendsms } from "../actions/auth"
-
-const Sendmessages = ({ sendsms }) => {
+import { token } from "../actions/auth"
+const Sendmessages = ({ sendsms, token }) => {
+  useEffect(() => {
+    token()
+  }, [token])
   const [formData, setFormData] = useState({
     textmessage: "",
     num: "",
@@ -92,4 +95,4 @@ const Sendmessages = ({ sendsms }) => {
   )
 }
 
-export default connect(null, { sendsms })(Sendmessages)
+export default connect(null, { sendsms, token })(Sendmessages)

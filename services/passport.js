@@ -31,7 +31,6 @@ passport.use(
       if (user) {
         done(null, user)
       } else {
-        console.log(profile.photos)
         let user = await new User({
           googleId: profile.id,
           email: profile._json.email,
@@ -39,22 +38,6 @@ passport.use(
           photos: profile.photos,
         })
         user.save()
-        const payload = {
-          user: {
-            id: profile.id,
-          },
-        }
-
-        jwt.sign(
-          payload,
-          keys.jwtSecret,
-          { expiresIn: 360000 },
-          (err, token) => {
-            if (err) throw err
-            console.log(token)
-            res.json({ token })
-          }
-        )
 
         done(null, user)
       }

@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
 import { login } from "../actions/auth"
+import { Link, Redirect } from "react-router-dom"
 
-const Login = ({ login }) => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password1: "",
@@ -43,6 +44,10 @@ const Login = ({ login }) => {
       login({ email, password: password1 })
       setFormData({ email: "", password1: "" })
     }
+  }
+
+  if (isAuthenticated) {
+    return <Redirect to='/messages'></Redirect>
   }
 
   const List =
@@ -96,5 +101,7 @@ const Login = ({ login }) => {
     </div>
   )
 }
-
-export default connect(null, { login })(Login)
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+})
+export default connect(mapStateToProps, { login })(Login)
