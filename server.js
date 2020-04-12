@@ -34,6 +34,17 @@ app.use("/login", require("./routes/login"))
 app.use("/", require("./routes/auth"))
 app.use("/", require("./routes/sms"))
 
+// Server static assest
+if (process.env.NODE_ENV === "production") {
+  //set static folder
+
+  app.use(express.static("client/build"))
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  })
+}
+
 const PORT = process.env.PORT || 5000
 app.listen(() => `Server is running on port ${PORT}`)
 
