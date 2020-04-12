@@ -5,11 +5,13 @@ import {
   REGISTER,
   LOGIN,
   TOKEN_AUTH,
+  LOGOUT,
+  CLEAR_PROFILE,
 } from "../actions/types"
 
 const initialState = {
   token: localStorage.getItem("token"),
-  isAuthenticated: null,
+  isAuthenticated: false,
   loading: true,
   user: null,
 }
@@ -27,13 +29,15 @@ export default function (state = initialState, action) {
     case REGISTER:
     case GOOGLE_LOGIN:
     case LOGIN:
+    case TOKEN_AUTH:
       localStorage.setItem("token", payload.token)
       return { ...state, ...payload, isAuthenticated: true, loading: false }
-    case TOKEN_AUTH:
-      localStorage.setItem("token", payload)
-      return { ...state, ...payload, isAuthenticated: true, loading: false }
+
     case AUTH_ERROR:
-      return { ...state, ...payload, isAuthenticated: false, loading: false }
+    case LOGOUT:
+    case CLEAR_PROFILE:
+      localStorage.removeItem("token")
+      return { ...state, token: null, isAuthenticated: false, loading: false }
     default:
       return state
   }

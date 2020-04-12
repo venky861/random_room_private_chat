@@ -6,6 +6,8 @@ import Register from "./components/Register"
 import Login from "./components/Login"
 import Alert from "./components/Alert"
 import setAuthToken from "./utils/setAuthToken"
+import PrivateRoute from "./routing/PrivateRoute"
+import New from "./components/New"
 
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom"
 
@@ -20,7 +22,12 @@ const App = () => {
       <Alert className='container'></Alert>
       <Route exact path='/' component={Landing}></Route>
       <Switch>
-        <Route exact path='/messages' component={Sendmessages}></Route>
+        <PrivateRoute
+          exact
+          path='/messages'
+          component={Sendmessages}
+        ></PrivateRoute>
+        <PrivateRoute exact path='/new' component={New}></PrivateRoute>
         <Route exact path='/register' component={Register}></Route>
         <Route exact path='/Login' component={Login}></Route>
       </Switch>

@@ -5,6 +5,8 @@ import {
   REGISTER,
   LOGIN,
   TOKEN_AUTH,
+  LOGOUT,
+  CLEAR_PROFILE,
 } from "./types"
 import { setAlert } from "./alert"
 import axios from "axios"
@@ -115,6 +117,20 @@ export const token = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
+    })
+  }
+}
+
+export const logout = () => async (dispatch) => {
+  console.log("logout called")
+  try {
+    const res = await axios.get("/api/logout")
+    dispatch({
+      type: LOGOUT,
+    })
+  } catch (err) {
+    dispatch({
+      type: CLEAR_PROFILE,
     })
   }
 }

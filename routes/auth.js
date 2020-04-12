@@ -27,7 +27,7 @@ router.get(
 )
 
 router.get("/token", (req, res) => {
-  res.send(req.cookies.jwt)
+  res.json({ token: req.cookies.jwt })
 })
 
 router.get("/auth/current_user", (req, res) => {

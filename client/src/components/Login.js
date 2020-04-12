@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { connect } from "react-redux"
 import { login } from "../actions/auth"
 import { Link, Redirect } from "react-router-dom"
+import { validateLogin } from "../utils/validate"
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -17,23 +18,11 @@ const Login = ({ login, isAuthenticated }) => {
     setFormData({ ...formData, [event.target.name]: event.target.value })
   }
 
-  const validate = (email, password1) => {
-    const errors = []
-    const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if (!regexp.test(email)) {
-      errors.push("Please enter a valid Email Address")
-    }
-    if (password1.length < 4) {
-      errors.push("Password should be greater than 4 characters")
-    }
-
-    return errors
-  }
-
   const submitHandler = (event) => {
     event.preventDefault()
-    console.log(email, password1)
-    const errors = validate(email, password1)
+    //  console.log(email, password1)
+    const errors = validateLogin(email, password1)
+    console.log("errors", errors)
     if (errors.length > 0) {
       setErr(errors)
       setTimeout(() => {
@@ -92,9 +81,12 @@ const Login = ({ login, isAuthenticated }) => {
                 type='submit'
                 className='btn btn-primary btn-block my-1 mb-3 mt-3'
               >
-                Submit
+                Login
               </button>
             </form>
+            <p className='text-center my-1'>
+              New User? <Link to='/Register'>Sign Up</Link>
+            </p>
           </div>
         </div>
       </div>

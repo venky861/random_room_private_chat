@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { connect } from "react-redux"
 import { register } from "../actions/auth"
 import { Link, Redirect } from "react-router-dom"
+import { validateRegister } from "../utils/validate"
 
 const Register = ({ register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -20,34 +21,11 @@ const Register = ({ register, isAuthenticated }) => {
     setFormData({ ...formData, [event.target.name]: event.target.value })
   }
 
-  const validate = (name, email, password1, password2) => {
-    const errors = []
-    const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if (!name && !email && !password1 && !password2) {
-      errors.push("Please enter all the fields ")
-    } else {
-      if (!name) {
-        errors.push("Name cannot be empy")
-      }
-      if (!regexp.test(email)) {
-        errors.push("Please enter a valid Email Address")
-      }
-      if (password1.length < 4 || password2.length < 4) {
-        errors.push("Password should be greater than 4 characters")
-      }
-    }
-
-    if (password1 !== password2) {
-      errors.push("Password does not match")
-    }
-
-    return errors
-  }
-
   const submitHandler = (event) => {
     event.preventDefault()
-    console.log(name, email, password1, password2)
-    const errors = validate(name, email, password1, password2)
+    // console.log(name, email, password1, password2)
+    const errors = validateRegister(name, email, password1, password2)
+    console.log("errors", errors)
     if (errors.length > 0) {
       setErr(errors)
       setTimeout(() => {
@@ -129,9 +107,12 @@ const Register = ({ register, isAuthenticated }) => {
                 type='submit'
                 className='btn btn-primary btn-block my-1 mb-3 mt-3'
               >
-                Submit
+                Register
               </button>
             </form>
+            <p className='text-center my-2'>
+              Have a account? <Link to='/Login'>Login</Link>
+            </p>
           </div>
         </div>
       </div>
