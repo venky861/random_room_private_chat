@@ -8,12 +8,17 @@ const Navbar = ({ auth, logout, authreducer }) => {
   const authLinks = (
     <ul className='navbar-nav navbar-expand'>
       <li className='nav-item mx-3'>
-        <Link to='/messages' className='nav-link'>
+        <Link to='/join' className='nav-link text-color-nav'>
+          Chat Room
+        </Link>
+      </li>
+      <li className='nav-item mx-3'>
+        <Link to='/messages' className='nav-link text-color-nav'>
           Send free sms
         </Link>
       </li>
       <li className='nav-item mx-3'>
-        <Link to='/' onClick={logout} className='nav-link'>
+        <Link to='/' onClick={logout} className='nav-link text-color-nav'>
           Logout
         </Link>
       </li>
@@ -23,17 +28,33 @@ const Navbar = ({ auth, logout, authreducer }) => {
     <ul className='navbar-nav navbar-expand '>
       <li className='nav-item mx-3 '>
         {" "}
-        <a href='/auth/google' className='nav-link' onClick={() => auth()}>
-          Login with Google
+        <a
+          href='/auth/google'
+          className='nav-link text-color-nav'
+          onClick={() => auth()}
+        >
+          Sign in with Google
+        </a>
+      </li>
+      <li className='nav-item mx-3 '>
+        {" "}
+        <a href='/login' className='nav-link text-color-nav'>
+          Login
+        </a>
+      </li>
+      <li className='nav-item mx-3 '>
+        {" "}
+        <a href='/register' className='nav-link text-color-nav'>
+          Register
         </a>
       </li>
     </ul>
   )
   return (
     <div className='mt-0'>
-      <div className='navbar '>
+      <div className='navbar navbar-color'>
         <div>
-          <Link to='/' className='nav-link'>
+          <Link to='/' className='nav-link text-color-nav'>
             Home
           </Link>
         </div>

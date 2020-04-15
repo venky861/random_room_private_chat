@@ -7,8 +7,8 @@ import Login from "./components/Login"
 import Alert from "./components/Alert"
 import setAuthToken from "./utils/setAuthToken"
 import PrivateRoute from "./routing/PrivateRoute"
-import New from "./components/New"
-
+import Join from "./components/chat/Join"
+import SocketPractice from "./components/chat/SocketPractice"
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom"
 
 if (localStorage.token) {
@@ -19,17 +19,17 @@ const App = () => {
   return (
     <Router>
       <Navbar />
+
       <Alert className='container'></Alert>
+
       <Route exact path='/' component={Landing}></Route>
+
       <Switch>
-        <PrivateRoute
-          exact
-          path='/messages'
-          component={Sendmessages}
-        ></PrivateRoute>
-        <PrivateRoute exact path='/new' component={New}></PrivateRoute>
+        <Route exact path='/messages' component={Sendmessages}></Route>
         <Route exact path='/register' component={Register}></Route>
         <Route exact path='/Login' component={Login}></Route>
+        <PrivateRoute path='/socket' component={SocketPractice}></PrivateRoute>
+        <PrivateRoute path='/join' component={Join}></PrivateRoute>
       </Switch>
     </Router>
   )

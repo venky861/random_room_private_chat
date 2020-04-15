@@ -1,38 +1,220 @@
-.App {
-  text-align: center;
+/*  ---------------------- text-color-landing  --------------------------- */
+.navbar-color {
+  background-color: #f08080;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.text-color-nav {
+  color: #000000;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.text-color-nav:hover {
+  color: #4b0082;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ---------------------- Landing ----------------------------------------*/
+
+.text-color-landing {
+  color: #00008b;
+}
+
+/* ---------------below is for chat --------------------------- */
+.messageContainer {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.containerr {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: 360px;
+  margin-left: 360px;
+}
+
+.justifyEnd {
+  justify-content: flex-end;
+}
+
+.sentText {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-family: Helvetica;
+  color: #828282;
+  letter-spacing: 0.3px;
+}
+
+.messageBox {
+  background: #f3f3f3;
+  border-radius: 20px;
+  padding: 5px 20px;
+  color: white;
+  display: inline-block;
+  max-width: 80%;
+}
+
+.backgroundBlue {
+  background: #2979ff;
+}
+
+.messageText {
+  width: 100%;
+  letter-spacing: 0;
+  float: left;
+  font-size: 1.1em;
+  word-wrap: break-word;
+}
+
+.colorWhite {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.justifyStart {
+  justify-content: flex-start;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.backgroundLight {
+  background: #f3f3f3;
+}
+
+.navbarul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbarli {
+  padding: 8px 12px;
+}
+
+.navbarli:hover {
+  background-color: rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+}
+
+.containheight {
+  max-height: 500px;
+  margin-top: 50px;
+}
+
+.sidenav {
+  width: 146px;
+  position: fixed;
+  z-index: 1;
+  height: 65%;
+  background-color: wheat;
+  overflow-x: hidden;
+  padding-top: 20px;
+  margin-top: 50px;
+}
+
+.infobar {
+  width: 100%;
+  background-color: mediumpurple;
+  padding: 15px;
+}
+
+.mainbar {
+  background-color: mediumturquoise;
+  margin-left: 146px;
+  height: 480px;
+  width: 970px;
+  overflow-y: scroll;
+}
+
+.inputtextbox {
+  height: 64px;
+}
+.footer {
+  margin-left: 140px;
+}
+
+.leaveroom {
+  float: right !important;
+}
+
+/*  ----------------------------------------------------*/
+
+@media (max-width: 768px) {
+  .containerr {
+    width: 99.9%;
+    margin-left: 0;
+    margin-right: 0;
   }
-  to {
-    transform: rotate(360deg);
+
+  .sidenav {
+    width: 146px;
+    position: fixed;
+    height: 53.5%;
+    background-color: wheat;
+    overflow-x: hidden;
+  }
+
+  .mainbar {
+    background-color: mediumturquoise;
+    height: 480px;
+    width: 596px;
+    overflow-y: scroll;
+    margin-left: 144px;
+  }
+}
+
+/* ---------------------- */
+/*  ----------------------------------------------------*/
+
+@media (max-width: 600px) {
+  .sidenav {
+    width: 146px;
+    position: fixed;
+    height: 45.8%;
+    background-color: wheat;
+    overflow-x: hidden;
+  }
+
+  .mainbar {
+    background-color: mediumturquoise;
+    height: 480px;
+    width: 596px;
+    overflow-y: scroll;
+  }
+
+  .infobar {
+    width: 130%;
+    background-color: mediumpurple;
+    padding: 15px;
+  }
+
+  .footer {
+    margin-left: 140px;
+    width: 104.3%;
+  }
+}
+
+/*  ----------------------------------------------------*/
+
+@media (max-width: 480px) {
+  .sidenav {
+    width: 141px;
+    position: fixed;
+    height: 53%;
+    background-color: wheat;
+    overflow-x: hidden;
+  }
+
+  .mainbar {
+    background-color: mediumturquoise;
+    height: 385px;
+    width: 325px;
+    overflow-y: scroll;
+  }
+
+  .infobar {
+    width: 104%;
+    background-color: mediumpurple;
+    padding: 15px;
+  }
+
+  .footer {
+    margin-left: 140px;
+    width: 73%;
   }
 }

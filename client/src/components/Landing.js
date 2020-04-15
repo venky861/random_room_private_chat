@@ -5,7 +5,10 @@ const Landing = () => {
     <div className='container mt-3'>
       <div className='text-center'>
         <h4 className='text-danger mt-3'>Welcome for fun</h4>
-        <p className='text-primary mt-2'> Feeling Bored? Checkout our site. </p>
+        <p className='mt-2 text-color-landing'>
+          {" "}
+          Feeling Bored? Checkout our site.{" "}
+        </p>
       </div>
     </div>
   )
