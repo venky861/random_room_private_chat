@@ -7,7 +7,7 @@ import Messages from "./Messages"
 import Sidebar from "./Sidebar"
 
 let socket
-const hostname = "localhost:5000"
+const hostname = "https://pure-brook-40724.herokuapp.com/"
 socket = io(hostname)
 
 const Socketpractice = ({ location }) => {
