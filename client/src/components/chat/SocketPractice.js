@@ -7,7 +7,7 @@ import Messages from "./Messages"
 import Sidebar from "./Sidebar"
 
 let socket
-const ENDPOINT = "https://pure-brook-40724.herokuapp.com/"
+const ENDPOINT = "https://ancient-mountain-05399.herokuapp.com/"
 socket = io(ENDPOINT)
 
 const Socketpractice = ({ location }) => {
