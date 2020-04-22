@@ -7,6 +7,8 @@ import {
   TOKEN_AUTH,
   LOGOUT,
   CLEAR_PROFILE,
+  LOAD_CURRENTUSER,
+  LOAD_ALLUSER,
 } from "../actions/types"
 
 const initialState = {
@@ -21,6 +23,8 @@ export default function (state = initialState, action) {
   console.log(payload)
   switch (type) {
     case SEND_SMS:
+    case LOAD_CURRENTUSER:
+    case LOAD_ALLUSER:
       return {
         ...state,
         loading: false,

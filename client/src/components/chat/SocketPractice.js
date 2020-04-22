@@ -7,10 +7,10 @@ import Messages from "./Messages"
 import Sidebar from "./Sidebar"
 
 let socket
-const ENDPOINT = "https://ancient-mountain-05399.herokuapp.com/"
-socket = io(ENDPOINT)
+const hostname = "localhost:5000"
+socket = io(hostname)
 
-const Socketpractice = ({ location }) => {
+const SocketPractice = ({ location }) => {
   const [file, setFile] = useState("")
   const [name, setName] = useState("")
   const [room, setRoom] = useState("")
@@ -39,7 +39,7 @@ const Socketpractice = ({ location }) => {
       socket.emit("disconnect")
       socket.disconnect()
     }
-  }, [location.search, ENDPOINT])
+  }, [location.search, hostname])
 
   /*******************************************************/
 
@@ -57,10 +57,14 @@ const Socketpractice = ({ location }) => {
     event.preventDefault()
     if (message) {
       socket.emit("sendMessage", message, () => setMessage(""))
+    } else if (file) {
+      socket.emit("sendMessage", file, () => setFile(""))
     }
   }
 
   // console.log(message, messages)
+  console.log(file)
+  console.log(message)
   return (
     <div className='containerr'>
       <div className='containheight'>
@@ -88,4 +92,4 @@ const Socketpractice = ({ location }) => {
   )
 }
 
-export default Socketpractice
+export default SocketPractice

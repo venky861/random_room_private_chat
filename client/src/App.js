@@ -9,6 +9,7 @@ import setAuthToken from "./utils/setAuthToken"
 import PrivateRoute from "./routing/PrivateRoute"
 import Join from "./components/chat/Join"
 import SocketPractice from "./components/chat/SocketPractice"
+import Users from "./components/Users"
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom"
 
 if (localStorage.token) {
@@ -30,6 +31,7 @@ const App = () => {
         <Route exact path='/Login' component={Login}></Route>
         <PrivateRoute path='/socket' component={SocketPractice}></PrivateRoute>
         <PrivateRoute path='/join' component={Join}></PrivateRoute>
+        <Route path='/users' component={Users}></Route>
       </Switch>
     </Router>
   )

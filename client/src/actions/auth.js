@@ -7,6 +7,8 @@ import {
   TOKEN_AUTH,
   LOGOUT,
   CLEAR_PROFILE,
+  LOAD_ALLUSER,
+  LOAD_CURRENTUSER,
 } from "./types"
 import { setAlert } from "./alert"
 import axios from "axios"
@@ -131,6 +133,35 @@ export const logout = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: CLEAR_PROFILE,
+    })
+  }
+}
+
+export const loadalluser = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/auth/all_user")
+    dispatch({
+      type: LOAD_ALLUSER,
+      payload: res.data,
+    })
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    })
+  }
+}
+
+export const loadcurrentuser = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/auth/current_user")
+    console.log("token", res)
+    dispatch({
+      type: LOAD_CURRENTUSER,
+      payload: res.data,
+    })
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
     })
   }
 }
