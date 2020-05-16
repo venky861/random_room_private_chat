@@ -5,16 +5,21 @@ import Landing from "./components/Landing"
 import Register from "./components/Register"
 import Login from "./components/Login"
 import Alert from "./components/Alert"
-import setAuthToken from "./utils/setAuthToken"
+
 import PrivateRoute from "./routing/PrivateRoute"
-import Join from "./components/chat/Join"
-import SocketPractice from "./components/chat/SocketPractice"
 import Users from "./components/Users"
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom"
+import Chat from "./components/Chat"
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token)
-}
+import JoinRoomChat from "./components/Roomchat/JoinRoomChat"
+import SocketPractice from "./components/Roomchat/SocketPractice"
+
+import JoinPersonal from "./components/Personalchat/JoinPersonal"
+import PersonalChat from "./components/Personalchat/PersonalChat"
+
+import JoinRandomChat from "./components/Randomchat/JoinRandomChat"
+import SocketPracticeRandom from "./components/Randomchat/SocketPracticeRandom"
+import EditProfile from "./components/EditProfile"
 
 const App = () => {
   return (
@@ -29,9 +34,20 @@ const App = () => {
         <Route exact path='/messages' component={Sendmessages}></Route>
         <Route exact path='/register' component={Register}></Route>
         <Route exact path='/Login' component={Login}></Route>
-        <PrivateRoute path='/socket' component={SocketPractice}></PrivateRoute>
-        <PrivateRoute path='/join' component={Join}></PrivateRoute>
+
+        <Route path='/joinroom' component={JoinRoomChat}></Route>
+        <Route path='/roomchat' component={SocketPractice}></Route>
+
+        <Route path='/joinrandom' component={JoinRandomChat}></Route>
+        <Route path='/Randomchat' component={SocketPracticeRandom}></Route>
+
+        <Route path='/joinprivate' component={JoinPersonal}></Route>
+        <Route path='/privatechat' component={PersonalChat}></Route>
+
+        <Route path='/chat' component={Chat}></Route>
+
         <Route path='/users' component={Users}></Route>
+        <Route path='/editprofile' component={EditProfile}></Route>
       </Switch>
     </Router>
   )

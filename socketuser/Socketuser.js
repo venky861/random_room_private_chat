@@ -2,15 +2,22 @@ const users = []
 
 const addUser = ({ id, name, room }) => {
   // console.log("add user called")
-  name = name.trim().toLowerCase()
-  room = room.trim().toLowerCase()
+  if (name) {
+    name = name.trim().toLowerCase()
+  }
+  if (room) {
+    room = room.trim().toLowerCase()
+  }
 
   const existingUser = users.find(
     (user) => user.name === name && user.room === room
   )
 
   if (existingUser) {
-    return { error: "User already exist" }
+    return {
+      error:
+        "User with same name already exist, please choose different name and Join again",
+    }
   }
   //  console.log("add user", name, room)
   let user = { id, name, room }

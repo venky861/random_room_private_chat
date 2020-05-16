@@ -1,4 +1,9 @@
 /*  ---------------------- text-color-landing  --------------------------- */
+
+.scrollingYAxis {
+  background-color: mediumturquoise;
+}
+
 .navbar-color {
   background-color: #f08080;
 }
@@ -9,6 +14,50 @@
 
 .text-color-nav:hover {
   color: #4b0082;
+}
+
+.widthname {
+  width: 140px;
+}
+
+.labelcolor {
+  background-color: lightblue;
+  color: blue;
+}
+
+.fontregister {
+  font-size: 15px;
+}
+
+.widthgender {
+  width: 120px;
+}
+
+/* ------------------------------chat landing page --------------------*/
+
+.card-color {
+  background-color: whitesmoke;
+}
+
+.chat-link {
+  color: darkgreen;
+}
+
+.chat-link:hover {
+  color: darkorchid;
+  text-decoration: none;
+}
+
+.formcontrol {
+  background-color: pink;
+}
+
+.chat-heading {
+  color: red;
+}
+
+.chat-top {
+  margin-top: 100px;
 }
 
 /* ---------------------- Landing ----------------------------------------*/
@@ -22,13 +71,6 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-}
-
-.containerr {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: 360px;
-  margin-left: 360px;
 }
 
 .justifyEnd {
@@ -80,206 +122,255 @@
   background: #f3f3f3;
 }
 
-.navbarul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.btn-send {
+  background-color: blueviolet;
+  color: white;
 }
 
-.navbarli {
-  padding: 8px 12px;
+.btn-disconnect {
+  color: white !important;
+  background-color: rgb(32, 25, 25);
 }
 
-.navbarli:hover {
-  background-color: rgba(0, 0, 0, 0.14);
-  cursor: pointer;
+.btn-hover:hover {
+  color: violet;
 }
 
-.containheight {
-  max-height: 500px;
-  margin-top: 50px;
-}
-
-.sidenav {
-  width: 146px;
-  position: fixed;
-  z-index: 1;
-  height: 65%;
-  background-color: wheat;
-  overflow-x: hidden;
-  padding-top: 20px;
-  margin-top: 50px;
-}
-
-.infobar {
-  width: 100%;
+.wrapperRandom1 {
+  display: grid;
   background-color: mediumpurple;
-  padding: 15px;
+  margin-top: 50px;
 }
 
-.mainbar {
+.wrapperRandom2,
+.wrapperPrivate {
+  display: grid;
   background-color: mediumturquoise;
-  margin-left: 146px;
-  height: 505px;
-  width: 970px;
-  overflow-y: scroll;
+  height: 410px;
 }
 
-.inputtextbox {
-  height: 64px;
+.wrapperPrivate1 {
+  display: grid;
+  height: 70px;
+  background-color: mediumpurple;
+  margin-top: 50px;
+  align-items: center;
 }
-.footer {
-  margin-left: 140px;
+
+.socketPractice {
+  background-image: url("./images/particleBackground.jpg");
+  background-repeat: "no-repeat";
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  position: fixed;
+}
+
+.disabled {
+  font-size: 16px;
+  padding-bottom: 4px;
+  margin-right: 10px;
+}
+
+.loading {
+  float: right;
+}
+.waiting {
+  float: right;
+}
+
+.online-users {
+  font-size: 16px;
+  float: left;
+}
+
+/* --------------------- below is for room chat */
+
+.wrapperRoom1 {
+  display: grid;
+  background-color: mediumpurple;
+  height: 50px;
+  align-items: center;
+  margin-top: 55px;
 }
 
 .leaveroom {
   float: right !important;
 }
-/*  ----------------------------------------------------*/
-
-@media (max-width: 1024px) {
-  .containerr {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .sidenav {
-    width: 146px;
-    position: fixed;
-    height: 38.2%;
-    background-color: wheat;
-    overflow-x: hidden;
-  }
-
-  .mainbar {
-    background-color: mediumturquoise;
-    height: 480px;
-    width: 85.5%;
-    overflow-y: scroll;
-    margin-left: 144px;
-  }
+.leaveroom:hover {
+  color: darkorange;
 }
 
-/* ---------------------- */
-
-/*  ----------------------------------------------------*/
-
-@media (max-width: 768px) {
-  .containerr {
-    width: 99.9%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .sidenav {
-    width: 146px;
-    position: fixed;
-    height: 50.9%;
-    background-color: wheat;
-    overflow-x: hidden;
-  }
-
-  .mainbar {
-    background-color: mediumturquoise;
-    height: 480px;
-    width: 596px;
-    overflow-y: scroll;
-    margin-left: 144px;
-  }
+.wrapperRoom2 {
+  display: grid;
+  grid-template-columns: 15% 85%;
+  height: 420px;
 }
 
-/* ---------------------- */
-/*  ----------------------------------------------------*/
+.boxroomsidebar {
+  background-color: wheat;
+}
 
-@media (max-width: 600px) {
-  .sidenav {
-    width: 146px;
-    position: fixed;
-    height: 43.2%;
-    background-color: wheat;
-    overflow-x: hidden;
-  }
+.boxroommainbar {
+  background-color: mediumturquoise;
+  height: 420px;
+}
 
-  .mainbar {
-    background-color: mediumturquoise;
-    height: 480px;
-    width: 596px;
-    overflow-y: scroll;
-  }
+.wrapperRoom3 {
+  display: grid;
+}
 
-  .infobar {
-    width: 130%;
+.btn-room {
+  color: white;
+  background-color: black;
+}
+
+.btn-room:hover {
+  color: lightseagreen;
+}
+
+/* --------------------- below for random chat*/
+
+.closeWindow {
+  text-align: right;
+  margin-right: 3px;
+}
+.closeWindowColor {
+  color: black;
+}
+
+@media only screen and (max-width: 400px) {
+  .wrapperRandom1 {
+    display: grid;
     background-color: mediumpurple;
-    padding: 15px;
+    margin-top: 30px;
   }
-
-  .footer {
-    margin-left: 140px;
-    width: 104.3%;
+  .online-users {
+    font-size: 16px;
+    text-align: center;
   }
-}
-
-/*  ----------------------------------------------------*/
-
-@media (max-width: 480px) {
-  .containerr {
-    width: 100%;
-    margin: 0px;
-  }
-
-  .sidenav {
-    display: none;
-    margin: 0px;
-  }
-
-  .mainbar {
-    background-color: mediumturquoise;
-    overflow-y: scroll;
-    margin: 0px;
-    width: 100%;
-  }
-
-  .infobar {
-    width: 100%;
-    background-color: mediumpurple;
-    margin: 0px;
-  }
-
-  .footer {
-    width: 100%;
-    margin: 0px;
+  .disabled {
+    font-size: 16px;
+    padding-bottom: 4px;
+    text-align: center;
+    margin-right: 40px;
   }
 }
 
-/*  ----------------------------------------------------*/
-
-@media (max-width: 375px) {
-  .containerr {
-    width: 100%;
-    margin: 0px;
-  }
-
-  .sidenav {
-    display: none;
-    margin: 0px;
-  }
-
-  .mainbar {
-    background-color: mediumturquoise;
-    overflow-y: scroll;
-    margin: 0px;
-    width: 100%;
-  }
-
-  .infobar {
-    width: 100%;
+@media only screen and (max-width: 375px) {
+  .wrapperRandom1 {
+    display: grid;
     background-color: mediumpurple;
-    margin: 0px;
+    margin-top: 10px;
   }
 
-  .footer {
-    width: 100%;
-    margin: 0px;
+  .online-users {
+    font-size: 16px;
+    text-align: center;
+  }
+  .disabled {
+    font-size: 16px;
+    padding-bottom: 4px;
+    text-align: center;
+    margin-right: 40px;
+  }
+  .wrapperRandom2,
+  .wrapperPrivate {
+    display: grid;
+    background-color: mediumturquoise;
+    height: 375px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .wrapperRandom1 {
+    display: grid;
+    background-color: mediumpurple;
+    margin-top: 8px;
+    font-size: 15px;
+  }
+  .wrapperRandom2,
+  .wrapperPrivate {
+    display: grid;
+    background-color: mediumturquoise;
+    height: 335px;
+  }
+}
+/* --------------------- below for room chat*/
+@media only screen and (max-width: 600px) {
+  .wrapperRoom2 {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 420px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .wrapperRoom2 {
+    display: grid;
+    grid-template-columns: 26% 74%;
+    height: 420px;
+    font-size: 14px;
+  }
+  .boxroomsidebar {
+    background-color: wheat;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .wrapperRoom2 {
+    display: grid;
+    grid-template-columns: 27% 73%;
+    height: 400px;
+    font-size: 14px;
+  }
+  .boxroomsidebar {
+    background-color: wheat;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .wrapperRoom2 {
+    display: grid;
+    grid-template-columns: 27% 73%;
+    height: 400px;
+    font-size: 14px;
+  }
+  .boxroommainbar {
+    background-color: mediumturquoise;
+    height: 400px;
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .wrapperRoom2 {
+    display: grid;
+    grid-template-columns: 29% 71%;
+    height: 400px;
+    font-size: 14px;
+  }
+  .wrapperRoom1 {
+    display: grid;
+    background-color: mediumpurple;
+    height: 50px;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .boxroommainbar {
+    background-color: mediumturquoise;
+    height: 399px;
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .wrapperRoom1 {
+    display: grid;
+    background-color: mediumpurple;
+    height: 50px;
+    align-items: center;
+    margin-top: 4px;
   }
 }

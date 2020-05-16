@@ -4,7 +4,7 @@ import Message from "./Message"
 
 const Messages = ({ messages, name }) => {
   return (
-    <ScrollToBottom className='mainbar'>
+    <ScrollToBottom className='boxroommainbar'>
       {messages.map((msg, index) => (
         <div key={index}>
           <Message name={name} msg={msg} />

@@ -5,12 +5,13 @@ import Infobarchat from "./Infobarchat"
 import Input from "./Input"
 import Messages from "./Messages"
 import Sidebar from "./Sidebar"
+import { withRouter } from "react-router-dom"
 
 let socket
-const hostname = "https://smschatmail.herokuapp.com/"
+const hostname = "localhost:5000"
 socket = io(hostname)
 
-const SocketPractice = ({ location }) => {
+const SocketPractice = ({ location, history }) => {
   const [file, setFile] = useState("")
   const [name, setName] = useState("")
   const [room, setRoom] = useState("")
@@ -23,15 +24,16 @@ const SocketPractice = ({ location }) => {
   /*******************************************************/
   useEffect(() => {
     const { name, room } = queryString.parse(location.search)
-
+    // console.log(name, room)
     setName(name)
     setRoom(room)
 
     //starting to emit connection with name and room
 
-    socket.emit("join", { name, room }, (error) => {
+    socket.emit("joinRoom", { name, room }, (error) => {
       if (error) {
         alert(error)
+        history.push("/joinroom")
       }
     })
 
@@ -39,7 +41,7 @@ const SocketPractice = ({ location }) => {
       socket.emit("disconnect")
       socket.disconnect()
     }
-  }, [location.search, hostname])
+  }, [location.search])
 
   /*******************************************************/
 
@@ -53,33 +55,39 @@ const SocketPractice = ({ location }) => {
     })
   }, [])
 
+  useEffect(() => {
+    socket.on("ErrorRoom", (err) => {
+      alert(err)
+    })
+  }, [])
+
   const sendMessage = (event) => {
     event.preventDefault()
     if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""))
+      socket.emit("sendMessageRoom", message, () => setMessage(""))
     } else if (file) {
-      socket.emit("sendMessage", file, () => setFile(""))
+      socket.emit("sendMessageRoom", file, () => setFile(""))
     }
   }
 
-  // console.log(message, messages)
-  console.log(file)
-  console.log(message)
+  // console.log(file)
+  // console.log(message)
   return (
-    <div className='containerr'>
-      <div className='containheight'>
-        <div className='sidenav'>
-          {" "}
-          <Sidebar users={users} room={room} />{" "}
-        </div>
-        <div className='infobar'>
-          {" "}
+    <div className='socketPractice'>
+      <div className='container'>
+        <div className='wrapperRoom1'>
           <Infobarchat room={room} />
         </div>
-        <div>
-          <Messages name={name} messages={messages} />
+        <div className='wrapperRoom2'>
+          <div className='boxroomsidebar'>
+            <Sidebar users={users} room={room} />
+          </div>
+          <div>
+            <Messages name={name} messages={messages} />
+          </div>
         </div>
-        <div className='footer'>
+
+        <div className='wrapperRoom3'>
           <Input
             message={message}
             setMessage={setMessage}
@@ -92,4 +100,4 @@ const SocketPractice = ({ location }) => {
   )
 }
 
-export default SocketPractice
+export default withRouter(SocketPractice)

@@ -9,12 +9,14 @@ import {
   CLEAR_PROFILE,
   LOAD_ALLUSER,
   LOAD_CURRENTUSER,
+  PROFILE_EDIT,
+  PRIVATEMESSAGES,
 } from "./types"
 import { setAlert } from "./alert"
 import axios from "axios"
 
 export const sendsms = ({ num, textmessage }) => async (dispatch) => {
-  console.log("action called")
+  // console.log("action called")
   try {
     const body = JSON.stringify({ num, textmessage })
     const config = {
@@ -37,7 +39,7 @@ export const sendsms = ({ num, textmessage }) => async (dispatch) => {
 
 export const auth = () => async (dispatch) => {
   try {
-    console.log("google called")
+    //   console.log("google called")
     await axios.get("/auth/google")
     const res = await axios.get("/token")
     console.log("token", res)
@@ -52,10 +54,17 @@ export const auth = () => async (dispatch) => {
   }
 }
 
-export const register = ({ name, email, password }) => async (dispatch) => {
+export const register = ({
+  name,
+  email,
+  password,
+  age,
+  gender,
+  country,
+}) => async (dispatch) => {
   try {
-    console.log("register called")
-    const body = JSON.stringify({ name, email, password })
+    // console.log("register called")
+    const body = JSON.stringify({ name, email, password, age, gender, country })
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +91,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
 
 export const login = ({ email, password }) => async (dispatch) => {
   try {
-    console.log("login called")
+    //   console.log("login called")
     const body = JSON.stringify({ email, password })
     const config = {
       headers: {
@@ -90,6 +99,7 @@ export const login = ({ email, password }) => async (dispatch) => {
       },
     }
     const res = await axios.post("/login", body, config)
+    console.log(res.data)
     dispatch({
       type: LOGIN,
       payload: res.data,
@@ -108,25 +118,10 @@ export const login = ({ email, password }) => async (dispatch) => {
   }
 }
 
-export const token = () => async (dispatch) => {
-  try {
-    const res = await axios.get("/token")
-    console.log("token", res)
-    dispatch({
-      type: TOKEN_AUTH,
-      payload: res.data,
-    })
-  } catch (err) {
-    dispatch({
-      type: AUTH_ERROR,
-    })
-  }
-}
-
 export const logout = () => async (dispatch) => {
   console.log("logout called")
   try {
-    const res = await axios.get("/api/logout")
+    await axios.get("/api/logout")
     dispatch({
       type: LOGOUT,
     })
@@ -152,11 +147,67 @@ export const loadalluser = () => async (dispatch) => {
 }
 
 export const loadcurrentuser = () => async (dispatch) => {
+  console.log("current user called")
   try {
     const res = await axios.get("/auth/current_user")
     console.log("token", res)
     dispatch({
       type: LOAD_CURRENTUSER,
+      payload: res.data,
+    })
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    })
+  }
+}
+
+export const token = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/token")
+    console.log("token", res)
+    dispatch({
+      type: TOKEN_AUTH,
+      payload: res.data,
+    })
+  } catch (err) {
+    console.log(err)
+    dispatch({
+      type: AUTH_ERROR,
+    })
+  }
+}
+
+export const profileedit = (editProfileData, history) => async (dispatch) => {
+  console.log("profileledit called")
+  try {
+    const body = JSON.stringify(editProfileData)
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+    const res = await axios.post("/api/updateuser/", body, config)
+    dispatch({
+      type: PROFILE_EDIT,
+      payload: res.data,
+    })
+    history.push("/messages")
+  } catch (err) {
+    console.log(err)
+    dispatch({
+      type: AUTH_ERROR,
+    })
+  }
+}
+
+export const privatemsg = () => async (dispatch) => {
+  console.log("current user called")
+  try {
+    const res = await axios.get("/api/privatemessages")
+    console.log("private msg ", res.data)
+    dispatch({
+      type: PRIVATEMESSAGES,
       payload: res.data,
     })
   } catch (err) {

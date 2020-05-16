@@ -66,8 +66,32 @@ router.get("/auth/current_user", auth, async (req, res) => {
 })
 
 router.get("/api/logout", (req, res) => {
+  res.clearCookie("jwt")
   req.logOut()
   // res.send(req.user)
   res.send("User logged out")
+})
+
+router.post("/api/updateuser", auth, async (req, res) => {
+  const data = await User.findById(req.user.id)
+  let email = data.email
+  let password = data.password
+
+  const { name, age, gender, country } = req.body
+  const updatedUser = {
+    name,
+    age,
+    gender,
+    country,
+    email,
+    password,
+  }
+
+  const response = await User.findOneAndUpdate(
+    { _id: req.user.id },
+    { $set: updatedUser },
+    { new: true }
+  )
+  res.send(response)
 })
 module.exports = router

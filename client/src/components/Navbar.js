@@ -4,12 +4,17 @@ import { auth, logout } from "../actions/auth"
 import { Link } from "react-router-dom"
 
 const Navbar = ({ auth, logout, authreducer }) => {
-  const { isAuthenticated, loading } = authreducer
+  const { isAuthenticated } = authreducer
   const authLinks = (
     <ul className='navbar-nav navbar-expand'>
       <li className='nav-item mx-3'>
-        <Link to='/join' className='nav-link text-color-nav'>
-          Chat Room
+        <Link to='/editprofile' className='nav-link text-color-nav'>
+          Profile
+        </Link>
+      </li>
+      <li className='nav-item mx-3'>
+        <Link to='/chat' className='nav-link text-color-nav'>
+          Chat
         </Link>
       </li>
       <li className='nav-item mx-3'>
@@ -48,10 +53,16 @@ const Navbar = ({ auth, logout, authreducer }) => {
           Register
         </a>
       </li>
+      <li className='nav-item mx-3 '>
+        {" "}
+        <a href='/chat' className='nav-link text-color-nav'>
+          Chat
+        </a>
+      </li>
     </ul>
   )
   return (
-    <div className='mt-0'>
+    <div className='mt-0 mb-0'>
       <div className='navbar navbar-color'>
         <div>
           <Link to='/' className='nav-link text-color-nav'>

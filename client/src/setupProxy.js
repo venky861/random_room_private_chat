@@ -8,4 +8,5 @@ module.exports = (app) => {
   app.use(proxy("/api/logout", { target: "http://localhost:5000/" }))
   app.use(proxy("/auth/all_user", { target: "http://localhost:5000/" }))
   app.use(proxy("/auth/current_user", { target: "http://localhost:5000/" }))
+  app.use(proxy("/api/privatemessages", { target: "http://localhost:5000/" }))
 }

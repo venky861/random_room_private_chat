@@ -7,8 +7,8 @@ import {
   TOKEN_AUTH,
   LOGOUT,
   CLEAR_PROFILE,
-  LOAD_CURRENTUSER,
   LOAD_ALLUSER,
+  PRIVATEMESSAGES,
 } from "../actions/types"
 
 const initialState = {
@@ -16,6 +16,8 @@ const initialState = {
   isAuthenticated: false,
   loading: true,
   user: null,
+  users: [],
+  messages: [],
 }
 
 export default function (state = initialState, action) {
@@ -23,19 +25,37 @@ export default function (state = initialState, action) {
   console.log(payload)
   switch (type) {
     case SEND_SMS:
-    case LOAD_CURRENTUSER:
-    case LOAD_ALLUSER:
       return {
         ...state,
         loading: false,
         user: payload,
+        isAuthenticated: true,
+      }
+    case LOAD_ALLUSER:
+      return {
+        ...state,
+        loading: false,
+        users: payload,
+        isAuthenticated: true,
+      }
+    case PRIVATEMESSAGES:
+      return {
+        ...state,
+        loading: false,
+        messages: payload,
       }
     case REGISTER:
     case GOOGLE_LOGIN:
     case LOGIN:
     case TOKEN_AUTH:
+      console.log(payload.token)
       localStorage.setItem("token", payload.token)
-      return { ...state, ...payload, isAuthenticated: true, loading: false }
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        token: payload.token,
+      }
 
     case AUTH_ERROR:
     case LOGOUT:

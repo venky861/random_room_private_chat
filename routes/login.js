@@ -38,6 +38,7 @@ router.post("/", async (req, res) => {
     jwt.sign(payload, keys.jwtSecret, { expiresIn: 360000 }, (err, token) => {
       if (err) throw err
 
+      res.cookie("jwt", token)
       res.json({ token })
     })
   } catch (err) {
@@ -47,3 +48,12 @@ router.post("/", async (req, res) => {
 })
 
 module.exports = router
+
+router.get("/token", (req, res) => {
+  try {
+    res.json({ token: req.cookies.jwt })
+  } catch (err) {
+    console.log(err)
+    res.status(500).send("error in getting token")
+  }
+})

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React from "react"
 import ReactEmoji from "react-emoji"
 import ScrollToBottom from "react-scroll-to-bottom"
 
@@ -18,24 +18,24 @@ const Message = ({ msg: { user, text, time }, name }) => {
           <div>
             <div className='messageContainer justifyEnd'>
               <div className='messageBox2 '>
-                <p className='messageText colorWhite'>
+                <div className='messageText colorWhite'>
                   <ScrollToBottom>
-                    <img src={text} className='mr-1' alt='image file' />
+                    <img src={text} className='mr-1' alt='name' />
                   </ScrollToBottom>
-                </p>
+                </div>
               </div>
             </div>
           </div>
         ) : (
           <div className='messageContainer justifyEnd'>
-            <p className='sentText pr-1'>{trimmedName}</p>
+            <div className='sentText pr-1'>{trimmedName}</div>
             <div className='messageBox backgroundBlue'>
-              <p className='messageText colorWhite'>
+              <div className='messageText colorWhite'>
                 <ScrollToBottom>
                   {" "}
                   {ReactEmoji.emojify(text)} {time}
                 </ScrollToBottom>
-              </p>
+              </div>
             </div>
           </div>
         )}
@@ -46,19 +46,19 @@ const Message = ({ msg: { user, text, time }, name }) => {
       {text.substring(5, 12) === "http://" ? (
         <div className='messageContainer justifyStart'>
           <div className='messageBox2 '>
-            <img src={text} className='ml-1' alt='image file' />
+            <img src={text} className='ml-1' alt='name' />
           </div>
         </div>
       ) : (
         <div className='messageContainer justifyStart'>
           <div className='messageBox bg-dark'>
-            <p className='messageText colorDark'>
+            <div className='messageText colorDark'>
               <ScrollToBottom>
                 {ReactEmoji.emojify(text)} {time}
               </ScrollToBottom>
-            </p>
+            </div>
           </div>
-          <p className='sentText pl-1'>{user}</p>
+          <div className='sentText pl-1'>{user}</div>
         </div>
       )}
     </div>

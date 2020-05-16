@@ -7,7 +7,7 @@ const keys = require("../config/keys.json")
 const bcrypt = require("bcryptjs")
 
 router.post("/", async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password, gender, age, country } = req.body
 
   try {
     const usermail = await User.findOne({ email })
@@ -19,7 +19,8 @@ router.post("/", async (req, res) => {
     }
 
     // create user
-    const user = await new User({ email, name, password })
+    console.log(age)
+    const user = await new User({ email, name, password, gender, age, country })
 
     bcrypt.genSalt(10, (err, salt) =>
       bcrypt.hash(user.password, salt, (err, hash) => {
@@ -38,7 +39,7 @@ router.post("/", async (req, res) => {
 
     jwt.sign(payload, keys.jwtSecret, { expiresIn: 360000 }, (err, token) => {
       if (err) throw err
-
+      res.cookie("jwt", token)
       res.json({ token })
     })
   } catch (err) {

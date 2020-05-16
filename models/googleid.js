@@ -14,5 +14,16 @@ const googleSchema = new mongoose.Schema({
     type: String,
   },
   photos: [{ value: { type: String } }],
+  age: {
+    type: Number,
+    required: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+  },
 })
 mongoose.model("google", googleSchema)

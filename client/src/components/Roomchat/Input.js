@@ -1,11 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 
 const Input = ({ message, setMessage, sendMessage, setFile }) => {
-  const changeHandler = (e) => {
-    e.preventDefault()
-    setFile(URL.createObjectURL(e.target.files[0]))
-  }
-
   return (
     <div className='form-group'>
       <form>
@@ -37,7 +32,7 @@ const Input = ({ message, setMessage, sendMessage, setFile }) => {
           </div>
           <div className='input-group-append'>
             <button
-              className='btn btn-secondary input-group-text'
+              className='btn btn-room input-group-text'
               type='submit'
               onClick={(event) => sendMessage(event)}
             >

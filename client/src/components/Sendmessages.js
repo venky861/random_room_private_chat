@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { sendsms } from "../actions/auth"
-import { token } from "../actions/auth"
-const Sendmessages = ({ sendsms, token }) => {
+import { sendsms, loadalluser, token, loadcurrentuser } from "../actions/auth"
+import setAuthToken from "../utils/setAuthToken"
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token)
+}
+
+const Sendmessages = ({ sendsms, loadalluser, token, loadcurrentuser }) => {
   useEffect(() => {
     token()
-  }, [token])
+    loadalluser()
+  }, [loadalluser, token])
+
+  useEffect(() => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token)
+      loadcurrentuser()
+    }
+  }, [loadcurrentuser])
+
   const [formData, setFormData] = useState({
     textmessage: "",
     num: "",
@@ -95,4 +109,6 @@ const Sendmessages = ({ sendsms, token }) => {
   )
 }
 
-export default connect(null, { sendsms, token })(Sendmessages)
+export default connect(null, { sendsms, loadalluser, token, loadcurrentuser })(
+  Sendmessages
+)
