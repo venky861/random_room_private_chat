@@ -8,7 +8,9 @@ import Sidebar from "./Sidebar"
 import { withRouter } from "react-router-dom"
 
 let socket
-const hostname = "localhost:5000"
+// const hostname = "localhost:5000"
+const hostname = "https://smschatmail.herokuapp.com/"
+
 socket = io(hostname)
 
 const SocketPractice = ({ location, history }) => {
