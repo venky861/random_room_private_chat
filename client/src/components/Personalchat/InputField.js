@@ -1,7 +1,9 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-const InputField = ({ message, setMessage, sendMessage, exitRoom }) => {
+const InputField = ({ message, setMessage, sendMessage }) => {
+  // console.log(typingReducer.to)
+
   return (
     <div>
       <div className='form-group'>
@@ -10,12 +12,15 @@ const InputField = ({ message, setMessage, sendMessage, exitRoom }) => {
             <input
               type='text'
               className='form-control input-group-lg'
-              placeholder='Type a message...'
+              placeholder={"Type a message..."}
               value={message}
-              onChange={(event) => setMessage(event.target.value)}
+              onChange={(event) => {
+                setMessage(event.target.value)
+              }}
               onKeyPress={(event) =>
                 event.key === "Enter" ? sendMessage(event) : ""
               }
+              //   onKeyUp={(event) => typingEvent(event)}
               name='message'
             ></input>
             <div className='input-group-append'>
@@ -29,14 +34,9 @@ const InputField = ({ message, setMessage, sendMessage, exitRoom }) => {
                 Send
               </button>
 
-              <button
-                className='btn btn-primary'
-                onClick={(event) => exitRoom(event)}
-              >
-                <Link to='/joinpersonal' className='text-primary'>
-                  Back
-                </Link>
-              </button>
+              <Link to='/chat' className='backButton'>
+                <button className='btn btn-primary'>Back</button>
+              </Link>
             </div>
           </div>
         </form>

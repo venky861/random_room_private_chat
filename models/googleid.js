@@ -16,11 +16,9 @@ const googleSchema = new mongoose.Schema({
   photos: [{ value: { type: String } }],
   age: {
     type: Number,
-    required: true,
   },
   gender: {
     type: String,
-    required: true,
   },
   country: {
     type: String,

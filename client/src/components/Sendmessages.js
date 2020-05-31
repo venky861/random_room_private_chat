@@ -11,14 +11,7 @@ const Sendmessages = ({ sendsms, loadalluser, token, loadcurrentuser }) => {
   useEffect(() => {
     token()
     loadalluser()
-  }, [loadalluser, token])
-
-  useEffect(() => {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token)
-      loadcurrentuser()
-    }
-  }, [loadcurrentuser])
+  }, [loadalluser, token, loadcurrentuser])
 
   const [formData, setFormData] = useState({
     textmessage: "",
@@ -27,6 +20,17 @@ const Sendmessages = ({ sendsms, loadalluser, token, loadcurrentuser }) => {
 
   const [err, setErr] = useState([])
   const { textmessage, num } = formData
+  const [dummy, setDummy] = useState(0)
+  const [messageStatus, setMessageStatus] = useState("")
+
+  useEffect(() => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token)
+      loadcurrentuser()
+    }
+  }, [dummy])
+
+  setTimeout(() => setDummy(1), 1000)
 
   const changeHandler = (event) => {
     event.preventDefault()
@@ -57,8 +61,10 @@ const Sendmessages = ({ sendsms, loadalluser, token, loadcurrentuser }) => {
         setErr([])
       }, 3000)
     } else {
+      setMessageStatus("Message has been sent")
       sendsms({ num, textmessage })
       setFormData({ num: "", textmessage: "" })
+      setTimeout(() => setMessageStatus(""), 3000)
     }
   }
 
@@ -73,6 +79,7 @@ const Sendmessages = ({ sendsms, loadalluser, token, loadcurrentuser }) => {
   return (
     <div className='mt-4 container'>
       <h3 className='text-primary text-center mt-2'>SEND FREE SMS</h3>
+      <h3 className='text-primary text-danger mt-2'>{messageStatus}</h3>
       <div className='text-center text-danger mt-2'> {List}</div>
       <div className='mt-2'>
         <form onSubmit={(event) => submitHandler(event)} className='mt-4'>
@@ -85,8 +92,11 @@ const Sendmessages = ({ sendsms, loadalluser, token, loadcurrentuser }) => {
               value={num}
               onChange={(event) => changeHandler(event)}
             />
+            <p className='mt-2 mobilenumberformat'>
+              Mobile number should be in format: +919600XXXXXX
+            </p>
           </div>
-          <div className='form-group'>
+          <div className='form-group mt-2'>
             <label className='text-dark'>
               Enter your text to send a message:{" "}
             </label>

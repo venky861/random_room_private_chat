@@ -142,19 +142,70 @@
   margin-top: 50px;
 }
 
-.wrapperRandom2,
-.wrapperPrivate {
+.EntirePrivateGrid {
   display: grid;
-  background-color: mediumturquoise;
-  height: 410px;
+  grid-template-columns: 20% 80%;
+  height: 500px;
+}
+.sideBarBox1 {
+  display: grid;
+  height: 70px;
+  background-color: whitesmoke;
+  color: blue;
+  margin-top: 50px;
+  align-items: center;
+}
+.sideBarBox2 {
+  display: grid;
+  background-color: lightgrey;
+  height: 450px;
+  align-items: center;
+}
+
+.sideBarBox3 {
+  display: grid;
+  background-color: palevioletred;
+  height: 450px;
+  align-items: center;
+}
+
+.mappedListOfUsers {
+  border: none;
+  padding: 6px;
+  margin-top: 4px;
+  width: 100%;
+  color: black;
+}
+
+.mappedListOfUsers:hover {
+  color: blue;
+}
+
+.welcomeGrid {
+  display: grid;
+  height: 520px;
+  background-color: violet;
+  margin-top: 50px;
+}
+
+.welcomeUIList {
+  margin: 2px;
+  display: grid;
 }
 
 .wrapperPrivate1 {
   display: grid;
   height: 70px;
-  background-color: mediumpurple;
+  background-color: lightgrey;
   margin-top: 50px;
   align-items: center;
+}
+
+.wrapperRandom2,
+.wrapperPrivate {
+  display: grid;
+  background-color: whitesmoke;
+  height: 410px;
 }
 
 .socketPractice {
@@ -234,7 +285,8 @@
 
 .closeWindow {
   text-align: right;
-  margin-right: 3px;
+  margin: 0;
+  padding: 0;
 }
 .closeWindowColor {
   color: black;
@@ -275,8 +327,7 @@
     text-align: center;
     margin-right: 40px;
   }
-  .wrapperRandom2,
-  .wrapperPrivate {
+  .wrapperRandom2 {
     display: grid;
     background-color: mediumturquoise;
     height: 375px;
@@ -290,8 +341,7 @@
     margin-top: 8px;
     font-size: 15px;
   }
-  .wrapperRandom2,
-  .wrapperPrivate {
+  .wrapperRandom2 {
     display: grid;
     background-color: mediumturquoise;
     height: 335px;
@@ -328,15 +378,6 @@
   .boxroomsidebar {
     background-color: wheat;
   }
-}
-
-@media only screen and (max-width: 414px) {
-  .wrapperRoom2 {
-    display: grid;
-    grid-template-columns: 27% 73%;
-    height: 400px;
-    font-size: 14px;
-  }
   .boxroommainbar {
     background-color: mediumturquoise;
     height: 400px;
@@ -356,7 +397,7 @@
     background-color: mediumpurple;
     height: 50px;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 4px;
   }
   .boxroommainbar {
     background-color: mediumturquoise;
@@ -365,12 +406,153 @@
   }
 }
 
-@media only screen and (max-width: 380px) {
-  .wrapperRoom1 {
+/*------------------------      media query for private chat ---------------------- */
+@media only screen and (max-width: 600px) {
+  .welcomePrivateHeading {
+    font-size: 25px;
+  }
+  .EntirePrivateGrid {
     display: grid;
-    background-color: mediumpurple;
-    height: 50px;
+    grid-template-columns: 25% 75%;
+    height: 500px;
+  }
+}
+
+@media only screen and (max-width: 411px) {
+  .welcomePrivateHeading {
+    font-size: 21px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .welcomePrivateHeading {
+    font-size: 19px;
+  }
+  .sideBarBox1 {
+    display: grid;
+    height: 70px;
+    background-color: whitesmoke;
+    color: blue;
+    margin-top: 10px;
     align-items: center;
-    margin-top: 4px;
+  }
+  .wrapperPrivate1 {
+    display: grid;
+    height: 70px;
+    background-color: lightgrey;
+    margin-top: 10px;
+    align-items: center;
+  }
+  .welcomeGrid {
+    display: grid;
+    height: 520px;
+    background-color: violet;
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .welcomePrivateHeading {
+    font-size: 20px;
+  }
+  .EntirePrivateGrid {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    height: 470px;
+  }
+  .sideBarBox1 {
+    display: grid;
+    height: 70px;
+    background-color: whitesmoke;
+    color: blue;
+    margin-top: 10px;
+    align-items: center;
+  }
+  .sideBarBox2 {
+    display: grid;
+    background-color: lightgrey;
+    height: 420px;
+    align-items: center;
+  }
+
+  .sideBarBox3 {
+    display: grid;
+    background-color: palevioletred;
+    height: 420px;
+    align-items: center;
+  }
+
+  .wrapperPrivate1 {
+    display: grid;
+    height: 70px;
+    background-color: lightgrey;
+    margin-top: 10px;
+    align-items: center;
+  }
+
+  .wrapperPrivate {
+    display: grid;
+    background-color: whitesmoke;
+    height: 380px;
+  }
+}
+
+.mobilenumberformat {
+  color: brown;
+  font-size: 13px;
+}
+/******************* Nav display ******************/
+/*
+.menu-icon,
+.chat-nav,
+.toggle-items {
+  display: none;
+}
+
+@media only screen and (max-width: 480px) {
+  .nav-display {
+    display: none;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .chat-nav {
+    display: block;
+  }
+
+  .toggle-items {
+    display: block;
+    float: left;
+  }
+}
+*/
+@media only screen and (max-width: 414px) {
+  .font-smallerScreens {
+    font-size: 13px;
+  }
+
+  .nav-items-smallerscreen {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+
+  .registeraion-smallScreen {
+    margin-top: 5px !important;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .font-smallerScreens {
+    font-size: 13px;
+  }
+
+  .nav-items-smallerscreen {
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+  }
+  .registeraion-smallScreen {
+    margin-top: 0px !important;
   }
 }

@@ -1,7 +1,26 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import { dbUserStatus } from "../actions/auth"
 
-const Chat = () => {
+const Chat = ({ adminuser, dbUserStatus }) => {
+  useEffect(() => {
+    adminuser && adminuser._id && dbUserStatus(adminuser._id)
+  }, [])
+
+  const LinkToPrivateChat = adminuser ? (
+    <Link
+      to={`/privatechat?name=${adminuser.name}&id=${adminuser._id}`}
+      className='align-middle chat-link'
+    >
+      Private Chat
+    </Link>
+  ) : (
+    <Link to={`/login`} className='align-middle chat-link'>
+      Private Chat
+    </Link>
+  )
+
   return (
     <div className='chat-top'>
       <div className='container'>
@@ -23,10 +42,7 @@ const Chat = () => {
               </Link>
             </div>
             <div className='text-center form-control formcontrol mt-3'>
-              {" "}
-              <Link to='/joinprivate' className='align-middle chat-link'>
-                Private Chat
-              </Link>
+              {LinkToPrivateChat}
             </div>
           </div>
         </div>
@@ -35,4 +51,9 @@ const Chat = () => {
   )
 }
 
-export default Chat
+const mapStateToProps = (state) => ({
+  adminuser: state.currentUser.user,
+  status: state.userstatus.status,
+})
+
+export default connect(mapStateToProps, { dbUserStatus })(Chat)

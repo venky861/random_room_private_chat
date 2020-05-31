@@ -22,11 +22,13 @@ app.use(cors())
 require("./models/user")
 require("./models/googleid")
 require("./models/chat")
-require("./models/chatroomcount")
+require("./models/useractive")
+require("./models/typingPlaceholder")
 
 const mongoose = require("mongoose")
 const chatUser = mongoose.model("chatuser")
-const roomCount = mongoose.model("roomcount")
+const useractive = mongoose.model("userstatus")
+const usertyping = mongoose.model("typingplaceholder")
 
 const connectDB = require("./config/db")
 require("./services/passport")
@@ -74,25 +76,41 @@ const databaseIdPrivate = {} // {socket.id:adminId}
 
 // -------------------------------------------------------------------------------------//
 
-const storeRoomUsersInDatabase = async (adminId) => {
-  const chatRoom = await roomCount.findOne({ user: adminId })
+const updateOnlineStatusInDb = async (adminId) => {
+  const response = await useractive.findOne({ user: adminId })
 
-  let chatCount = {
-    user: adminId,
-    count: Object.keys(namesPrivate).length,
-    users: Object.values(namesPrivate),
-  }
-
-  if (!chatRoom) {
-    let chat = await new roomCount(chatCount)
-    await chat.save()
+  if (!response) {
+    await new useractive({
+      user: adminId,
+      status: "online",
+    }).save()
   } else {
-    let chat = await roomCount.findOneAndUpdate(
+    const data = await useractive.findOneAndUpdate(
       { user: adminId },
-      { $set: chatCount },
+      { $set: { status: "online" } },
       { new: true }
     )
-    await chat.save()
+    await data.save()
+  }
+}
+
+const updateOfflineStatusInDb = async (adminId) => {
+  // const data = await chatUser.findOne({user: adminId}).select('-messages')
+  const response = await useractive.findOne({ user: adminId })
+  let userActiveStatusToDatabase = {
+    user: adminId,
+    status: "offline",
+  }
+  if (!response) {
+    let data = await new useractive(userActiveStatusToDatabase)
+    await data.save()
+  } else {
+    const data = await useractive.findOneAndUpdate(
+      { user: adminId },
+      { $set: userActiveStatusToDatabase },
+      { new: true }
+    )
+    await data.save()
   }
 }
 
@@ -103,55 +121,37 @@ const storeMessagesInDatabase = async (
   peerName,
   message
 ) => {
-  console.log(adminId, peerId, adminName, peerName, message)
+  console.log({ adminId, peerId, adminName, peerName, message })
 
   if (adminId) {
     const chatProfile = await chatUser.findOne({ user: adminId })
     const chatProfilePeer = await chatUser.findOne({ user: peerId })
 
-    const chatFields = { user: adminId }
-    chatFields.messages = {
+    let MessageDataToDatabase = {
       text: message,
       from: adminId,
       to: peerId,
       adminName: adminName,
       peerName: peerName,
     }
+    const chatFields = { user: adminId }
+    chatFields.messages = MessageDataToDatabase
 
     const chatFieldsPeer = { user: peerId }
-    chatFieldsPeer.messages = {
-      text: message,
-      from: adminId,
-      to: peerId,
-      adminName: adminName,
-      peerName: peerName,
-    }
+    chatFieldsPeer.messages = MessageDataToDatabase
 
     if (!chatProfile) {
       let chat = await new chatUser(chatFields)
       await chat.save()
     } else {
-      chatProfile.messages.push({
-        text: message,
-        from: adminId,
-        to: peerId,
-        adminName: adminName,
-        peerName: peerName,
-      })
-
+      chatProfile.messages.push(MessageDataToDatabase)
       await chatProfile.save()
     }
     if (!chatProfilePeer) {
       let chat = await new chatUser(chatFieldsPeer)
       await chat.save()
     } else {
-      chatProfilePeer.messages.push({
-        text: message,
-        from: adminId,
-        to: peerId,
-        adminName: adminName,
-        peerName: peerName,
-      })
+      chatProfilePeer.messages.push(MessageDataToDatabase)
 
       await chatProfilePeer.save()
     }
@@ -160,6 +160,33 @@ const storeMessagesInDatabase = async (
   }
 }
 
+const typingMessage = async (adminId, peerId) => {
+  // console.log({ adminId, peerId, adminName, peerName, message })
+
+  if (adminId) {
+    const typingAdmin = await usertyping.findOne({ user: adminId })
+    //  const typingPeer = await usertyping.findOne({ user: peerId })
+
+    const typingAdminField = { user: adminId, to: peerId }
+    //   const typingPeerField = { user: peerId, to: peerId }
+    console.log({ typingAdmin })
+    if (!typingAdmin) {
+      console.log("typing inside called")
+      let data = await new usertyping(typingAdminField)
+      await data.save()
+    } else {
+      console.log("typing outside called")
+      const data = await usertyping.findOneAndUpdate(
+        { user: adminId },
+        { $set: typingAdminField },
+        { new: true }
+      )
+      await data.save()
+    }
+  } else {
+    console.log("some error occured")
+  }
+}
 // -------------------------------------------------------------------------------------//
 io.on("connection", (socket) => {
   // console.log("socket connected", socket.id)
@@ -167,11 +194,13 @@ io.on("connection", (socket) => {
   socket.on(
     "joinPrivate",
     async ({ adminName, adminId, peerName, peerId }, callback) => {
+      console.log({ adminName, adminId, peerName, peerId })
       roomsPrivate[adminId] = socket.id
       peersPrivate[socket.id] = peerId
       namesPrivate[socket.id] = adminName
       databaseIdPrivate[socket.id] = adminId
-      //   storeRoomUsersInDatabase(adminId)
+      updateOnlineStatusInDb(adminId)
+
       //  console.log("names start", namesPrivate)
 
       callback()
@@ -179,7 +208,7 @@ io.on("connection", (socket) => {
     }
   )
 
-  socket.on("sendMessagePrivate", async (message, callback) => {
+  socket.on("typing message", () => {
     let peerId = peersPrivate[socket.id]
     let room1 = roomsPrivate[peerId]
     let room2 = socket.id
@@ -187,31 +216,43 @@ io.on("connection", (socket) => {
     let peerName = namesPrivate[room1]
     //  console.log({ peerName })
     let adminId = databaseIdPrivate[socket.id]
+    typingMessage(adminId, peerId)
+  })
 
-    //  storeRoomUsersInDatabase(adminId)
+  socket.on("sendMessagePrivate", async (message, callback) => {
+    let peerId = peersPrivate[socket.id]
+    console.log("sendMessagePrivate peerId", peerId)
+    let room1 = roomsPrivate[peerId]
+    let room2 = socket.id
+    let adminName = namesPrivate[socket.id]
+    let peerName = namesPrivate[room1]
+    //  console.log({ peerName })
+    let adminId = databaseIdPrivate[socket.id]
 
     storeMessagesInDatabase(adminId, peerId, adminName, peerName, message)
+    console.log({ room1, room2 })
+    io.to(room1)
+      .to(room2)
+      .emit("chat start private", {
+        user: adminName,
+        text: message,
+        time: moment().format("h:mm a"),
+      })
 
-    if (room1)
-      io.to(room1)
-        .to(room2)
-        .emit("chat start private", {
-          user: adminName,
-          text: message,
-          time: moment().format("h:mm a"),
-        })
+    //above code is written when no database is used , messages are emitted to front end and displayed
 
     callback()
   })
 
   let endEconnection = () => {
+    console.log("disconnection called pa")
     let adminId = databaseIdPrivate[socket.id]
     delete namesPrivate[socket.id]
     delete roomsPrivate[adminId]
     delete peersPrivate[socket.id]
     //  console.log("User left the chat , data deleted")
 
-    //  storeRoomUsersInDatabase(adminId)
+    updateOfflineStatusInDb(adminId)
     delete databaseIdPrivate[socket.id]
     //   console.log("names end connection", namesPrivate)
   }
@@ -274,10 +315,7 @@ let findPeerForSocket = (socket) => {
         time: moment().format("h:mm a"),
       })
     } catch (err) {
-      socket.emit(
-        "ErrorRandom",
-        "Error in connection , please try after some time"
-      )
+      console.log(err)
     }
   } else {
     users.push(socket)
@@ -294,6 +332,7 @@ io.on("connection", (socket) => {
     //  console.log("randomchat name", name)
 
     names[socket.id] = name
+    console.log(name)
     // console.log(Object.keys(names).length)
     socket.emit("numberOfUsersOnline", Object.keys(names).length)
     allUsers[socket.id] = socket
@@ -303,6 +342,7 @@ io.on("connection", (socket) => {
 
   // message comes from front end
   socket.on("sendMessageRandom", (message, callback) => {
+    console.log(message)
     let room = rooms[socket.id]
     let originalName = names[socket.id]
     console.log(Object.keys(names).length)
@@ -319,6 +359,8 @@ io.on("connection", (socket) => {
 
   let endEconnection = () => {
     let room = rooms[socket.id]
+    // console.log(users)
+
     socket.emit("only one user")
     if (room) {
       let roomID = room.split("#")

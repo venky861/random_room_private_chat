@@ -2,62 +2,47 @@ import React, { useEffect } from "react"
 import ScrollToBottom from "react-scroll-to-bottom"
 import MessagePrivate from "./MessagePrivate"
 import { connect } from "react-redux"
-import { privatemsg } from "../../actions/auth"
 
-const MessagesPrivate = ({
-  messageFromDb,
-  adminId,
-  peerId,
-  privatemsg,
-  messages,
-  message,
-  adminName,
-  peerName,
-}) => {
-  console.log(messageFromDb.messages.messages)
+const MessagesPrivate = ({ messageFromDb, adminId, peerId }) => {
+  //  console.log(messageFromDb.messages)
+  //console.log(messageFromDb.status)
+  // console.log(messageFromDb.lastSeenIn)
 
-  useEffect(() => {
-    privatemsg()
-    console.log("personal chat called inside useeffect")
-  }, [
-    privatemsg,
-    messages,
-    message,
-    adminId,
-    adminName,
-    peerId,
-    peerName,
-    messageFromDb,
-  ])
+  const messageBetweenAdminAndPeer =
+    messageFromDb.messages &&
+    messageFromDb.messages.filter(
+      (msg) =>
+        (msg.from === adminId && msg.to === peerId) ||
+        (msg.from === peerId && msg.to === adminId)
+    )
 
-  const messageBetweenAdminAndPeer = messageFromDb.messages.messages.filter(
-    (msg) =>
-      (msg.from === adminId && msg.to === peerId) ||
-      (msg.from === peerId && msg.to === adminId)
-  )
+  // console.log(messageBetweenAdminAndPeer)
 
-  console.log(messageBetweenAdminAndPeer)
-
+  const mapMessagesBetweenAdminAndPeer =
+    messageBetweenAdminAndPeer &&
+    messageBetweenAdminAndPeer.map((msg) => (
+      <div key={msg._id}>
+        <MessagePrivate
+          adminName={msg.adminName}
+          peerName={msg.peerName}
+          from={msg.from}
+          to={msg.to}
+          text={msg.text}
+          date={msg.date}
+          active={messageFromDb.status}
+          lastSeenIn={messageFromDb.lastSeenIn}
+        />
+      </div>
+    ))
   return (
     <ScrollToBottom className='wrapperPrivate'>
-      {messageBetweenAdminAndPeer.map((msg) => (
-        <div key={msg._id}>
-          <MessagePrivate
-            adminName={msg.adminName}
-            peerName={msg.peerName}
-            from={msg.from}
-            to={msg.to}
-            text={msg.text}
-            date={msg.date}
-          />
-        </div>
-      ))}
+      {mapMessagesBetweenAdminAndPeer}
     </ScrollToBottom>
   )
 }
 
 const mapStateToProps = (state) => ({
-  messageFromDb: state.messagesprivate,
+  messageFromDb: state.messagesprivate.messages,
 })
 
-export default connect(mapStateToProps, { privatemsg })(MessagesPrivate)
+export default connect(mapStateToProps)(MessagesPrivate)

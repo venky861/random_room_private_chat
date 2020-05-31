@@ -11,6 +11,8 @@ import {
   LOAD_CURRENTUSER,
   PROFILE_EDIT,
   PRIVATEMESSAGES,
+  USERSTATUS,
+  TYPING,
 } from "./types"
 import { setAlert } from "./alert"
 import axios from "axios"
@@ -202,12 +204,46 @@ export const profileedit = (editProfileData, history) => async (dispatch) => {
 }
 
 export const privatemsg = () => async (dispatch) => {
-  console.log("current user called")
+  // console.log("current user called")
   try {
-    const res = await axios.get("/api/privatemessages")
+    const res = await axios.get("/api/privatemsg")
     console.log("private msg ", res.data)
     dispatch({
       type: PRIVATEMESSAGES,
+      payload: res.data,
+    })
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    })
+  }
+}
+
+export const dbUserStatus = (id) => async (dispatch) => {
+  // console.log("current user called")
+  // console.log(id)
+  try {
+    const res = await axios.get(`/api/dbuserstatus/${id}`)
+    //   console.log("db status ", res.data)
+    //   console.log("dbUserStatus called")
+    dispatch({
+      type: USERSTATUS,
+      payload: res.data,
+    })
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    })
+  }
+}
+
+export const typingMessage = (id) => async (dispatch) => {
+  try {
+    console.log("called typing")
+    const res = await axios.get(`/api/typing/${id}`)
+    console.log(res)
+    dispatch({
+      type: TYPING,
       payload: res.data,
     })
   } catch (err) {

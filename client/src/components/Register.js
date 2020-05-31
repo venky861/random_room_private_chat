@@ -86,10 +86,10 @@ const Register = ({ register, isAuthenticated }) => {
       : ""
 
   return (
-    <div className='mt-4'>
+    <div className='mt-4 registeraion-smallScreen'>
       <div className='container '>
         <div className='col-md-7 m-auto'>
-          <div className='card card-body mt-2'>
+          <div className='card card-body mt-2 '>
             <h3 className='text-center mt-2'>Registeration</h3>
             <div className='text-center text-danger mt-2'> {ListOfErrors}</div>
             <form className='mt-2' onSubmit={(event) => submitHandler(event)}>

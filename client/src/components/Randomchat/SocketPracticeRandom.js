@@ -6,8 +6,8 @@ import MessagesRandom from "./MessagesRandom"
 import { Link } from "react-router-dom"
 
 let socket
-// const hostname = "localhost:5000"
-const hostname = "https://smschatmail.herokuapp.com/"
+const hostname = "localhost:5000"
+// const hostname = "https://smschatmail.herokuapp.com/"
 
 socket = io(hostname)
 let connected = false
@@ -114,7 +114,7 @@ const SocketPracticeRandom = ({ location }) => {
   console.log(error)
   const exitRoom = (event) => {
     event.preventDefault()
-
+    console.log("exitRoom called")
     if (connected) {
       socket.emit("leave room")
       socket.disconnect()
@@ -156,11 +156,19 @@ const SocketPracticeRandom = ({ location }) => {
       <div className='socketPractice'>
         <div className='container'>
           <div className='wrapperRandom1'>
-            <Link to='/chat' className='closeWindowColor'>
-              <i
-                className='fa fa-window-close float-right closeWindow'
-                aria-hidden='true'
-              ></i>
+            <Link to='/chat' className=' m-0 p-0 border-0'>
+              {" "}
+              <button
+                className='float-right m-0 p-0 border-0'
+                onClick={(event) => exitRoom(event)}
+              >
+                <i
+                  className='fa fa-window-close  closeWindowColor'
+                  aria-hidden='true'
+                >
+                  {" "}
+                </i>
+              </button>
             </Link>
 
             <h4 className='m-3 text-center'>Random Chat</h4>

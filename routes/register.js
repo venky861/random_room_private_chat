@@ -5,6 +5,7 @@ const User = mongoose.model("google")
 const jwt = require("jsonwebtoken")
 const keys = require("../config/keys.json")
 const bcrypt = require("bcryptjs")
+const useractive = mongoose.model("userstatus")
 
 router.post("/", async (req, res) => {
   const { name, email, password, gender, age, country } = req.body
@@ -23,14 +24,19 @@ router.post("/", async (req, res) => {
     const user = await new User({ email, name, password, gender, age, country })
 
     bcrypt.genSalt(10, (err, salt) =>
-      bcrypt.hash(user.password, salt, (err, hash) => {
+      bcrypt.hash(user.password, salt, async (err, hash) => {
         if (err) throw err
 
         user.password = hash
-        user.save()
+        await user.save()
       })
     )
-    console.log(user)
+
+    //  console.log(user)
+    await new useractive({
+      user: user.id,
+      status: "online",
+    }).save()
     const payload = {
       user: {
         id: user.id,

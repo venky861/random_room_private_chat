@@ -5,7 +5,9 @@ const jwt = require("jsonwebtoken")
 const keys = require("../config/keys.json")
 const mongoose = require("mongoose")
 const User = mongoose.model("google")
+const Userstatus = mongoose.model("userstatus")
 const auth = require("../middleware/requireLogin")
+const useractive = mongoose.model("userstatus")
 
 router.get(
   "/auth/google",
@@ -15,7 +17,7 @@ router.get(
 router.get(
   "/auth/google/callback",
   passport.authenticate("google"),
-  (req, res) => {
+  async (req, res) => {
     try {
       //  console.log("req.user", req.user)
       const payload = {
@@ -23,6 +25,10 @@ router.get(
           id: req.user.id,
         },
       }
+      await new useractive({
+        user: req.user.id,
+        status: "online",
+      }).save()
       let token = jwt.sign(payload, keys.jwtSecret, { expiresIn: 360000 })
       console.log("token", token)
       res.cookie("jwt", token)
@@ -65,7 +71,18 @@ router.get("/auth/current_user", auth, async (req, res) => {
   }
 })
 
-router.get("/api/logout", (req, res) => {
+router.get("/api/logout", auth, async (req, res) => {
+  const updateStatus = { status: "offline", lastSeenIn: Date.now() }
+  const UserExist = await Userstatus.findOne({ user: req.user.id })
+
+  if (UserExist) {
+    const status = await Userstatus.findOneAndUpdate(
+      { user: req.user.id },
+      { $set: updateStatus },
+      { new: true }
+    )
+  }
+
   res.clearCookie("jwt")
   req.logOut()
   // res.send(req.user)
